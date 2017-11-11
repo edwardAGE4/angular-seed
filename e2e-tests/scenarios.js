@@ -39,4 +39,18 @@ describe('my app', function() {
     });
 
   });
+    
+    describe('customers', function() {
+
+    beforeEach(function() {
+      browser.get('index.html#!/customers');
+    });
+
+
+    it('should render customers when user navigates to /customers', function() {
+      expect(element.all(by.css('[ng-view] p')).first().getText()).
+        toMatch(/partial for customers/);
+    });
+
+  });
 });

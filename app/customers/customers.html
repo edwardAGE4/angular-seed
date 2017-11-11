@@ -1,0 +1,28 @@
+<p>Affichage de customers</p>
+<button > Ajouter </button> 
+<br/><br/>
+
+<table>
+    <thead>
+        <label>Nom <input ng-model="searchText.name"> </label> 
+        <label>Email <input ng-model="searchText.email"> </label>
+        <label>Companie <input ng-model="searchText.company"> </label>
+    </thead>
+    
+    <tbody>
+        <tr ng-repeat="customer in customers | filter:searchText | orderBy:'name'"> 
+            <td> 
+                <p>{{customer.name}} </p>
+                <p>{{customer.email}} </p>
+                <p>{{customer.company}} </p>
+            </td>
+            <td> 
+                
+                <button ng-click="count = 1" ng-init="count=0"> Modifier </button> 
+                <button ng-click="count = count - 1" ng-init="count=0"> Supprimer </button> 
+                <span>   count: {{count}} </span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+   
