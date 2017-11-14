@@ -25,15 +25,30 @@ angular.module('myApp.customers', ['ngRoute'])
 
 //controleur de customers
 
-.controller('CustomersCtrl', ['$rootScope','$scope','customersProvider','$location', function($rootScope,$scope, customersProvider,$location) {
+.controller('CustomersCtrl', ['$rootScope','$scope','$http','customersProvider','$location', function($rootScope,$scope,$http, customersProvider,$location) {
     
     //Initialisation des valeurs 
-    $scope.customers = customersProvider.initCustomer();
+    
+    if($rootScope.Etape !=1)
+    {   
+        $http.get('customers/customers.json').success(function(data){
+            customersProvider.initCustomer(data);
+            $scope.customers= customersProvider.returnCustomer();
+            $rootScope.Etape=1; console.log($scope.customers);
+        });
+    }
+    if($rootScope.Etape ==1)
+    {
+        $scope.customers= customersProvider.returnCustomer(); 
+        console.log($scope.customers);
+    }
+   
     
     //Méthode de suppression
      $scope.rmdcustomer = function (customer){
         // console.log(customer);
         $scope.customers = customersProvider.rmd(customer);
+       
     }
      
     //Choix d'action : Modification
@@ -72,7 +87,7 @@ angular.module('myApp.customers', ['ngRoute'])
         //dans le cas d'une modification    
         else  $scope.customers = customersProvider.update($rootScope.New_Customer);
         
-        console.log($scope.customers);
+       // console.log($scope.customers);
         $location.path('/customers')
     }
     
